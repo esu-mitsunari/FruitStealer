@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
+
     [Header("UIの設定")]
     [SerializeField] private UIDocument uiDocument;
     public static GameManager Instance { get; private set; }
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState { get; private set; } = GameState.Shooting;
 
     private float catchReadyY = -2.0f;
-    
+
     private VisualElement _clearPanel;
     private Button _titleButton;
     private Label _bulletLabel;
@@ -42,11 +42,9 @@ public class GameManager : MonoBehaviour
         if (uiDocument != null)
         {
             VisualElement root = uiDocument.rootVisualElement;
-            
-            // 最初は隠れているクリアパネルを探してキャッシュ
+
             _clearPanel = root.Q<VisualElement>("ClearElement");
-            
-            // パネルの中にあるタイトルボタンを探す
+
             _titleButton = root.Q<Button>("RestartButton");
             if (_titleButton != null)
             {
@@ -84,22 +82,20 @@ public class GameManager : MonoBehaviour
     private void TriggerFuryMode()
     {
         CurrentState = GameState.FuryMode;
-        Debug.Log("⚠️ 敵が発狂モードに突入！");
+        Debug.Log("敵が発狂");
         if (_enemy != null) _enemy.SetFuryMode();
     }
 
-    // 💡【修正】成否判定関数（Playerのジャンプコルーチンから呼び出されるようにします）
     public void CheckCatchSuccess()
     {
         if (CurrentState != GameState.FuryMode || _player == null || _enemy == null) return;
 
-        // プレイヤーと敵のX座標の差を計算
         float distanceX = Mathf.Abs(_player.transform.position.x - _enemy.transform.position.x);
 
         if (distanceX <= 0.8f)
         {
             CurrentState = GameState.GameClear;
-            Debug.Log("🎉 見事に重なった！ゲームクリア！");
+            Debug.Log("ゲームクリア！");
             _enemy.StopMovement(stopDuration);
             if (_clearPanel != null)
             {
@@ -108,8 +104,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // 💡【変更】ゲームオーバーにはせず、プレイヤーにペナルティを与える
-            Debug.Log("❌ 失敗！空振りペナルティ発生！");
             _player.ApplyPenalty(0.4f);
         }
     }
