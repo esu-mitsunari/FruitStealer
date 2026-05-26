@@ -40,8 +40,11 @@ FruitStealer
 - **[Obstacle.cs](Assets/Scripts/Obstacle.cs) / [Bullet.cs](Assets/Scripts/Bullet.cs)**
     - 障害物や弾の動きの制御。Unityの物理演算に任せきりにするのではなく、数学の計算を使って制作。プレイヤーの横位置を追いかけ、特定の距離まで近づいたら真下に折れ曲がって落ちてくるという動きを実装。
 
-- **[Enemy.cs](Assets/Scripts/Enemy.cs) / [GameManager.cs](Assets/Scripts/GameManager.cs)**
+- **[GameManager.cs](Assets/Scripts/GameManager.cs)**
     - ゲーム全体の流れや、敵の動きを管理するコード。ゲームの進行状況に合わせて状態を切り替え、敵のスピードを4倍にしたり、行動パターンを弾を撃つものからジャンプへと変化させるモードを実装。
+
+- **[Enemy.cs](Assets/Scripts/Enemy.cs) / [Player.cs](Assets/Scripts/Player.cs)**
+    - 敵やプレイヤーの動きを制御。プレイヤーはマウスで左右に移動し、左クリックで果物を投げる。敵が果物に当たった際や、プレイヤーが障害物に当たった際は、手応えを出すため振動するようにしている。
 
 ## 開発環境
 - **ゲームエンジン:** Unity 2022.3
